@@ -21,6 +21,6 @@ uint8_t print_string(UART_HandleTypeDef huart, char* string);
  * @param:
  * @return:
  */
-uint8_t receive_string(uint8_t* pData, uint8_t length);
+uint8_t uart_rx_byte_singlestring(UART_HandleTypeDef huart, uint8_t* buffer);
 
 #endif /* UART_PROTOCOL_H_ */
