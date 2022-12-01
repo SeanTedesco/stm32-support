@@ -4,8 +4,8 @@
  * @date	2022-11-29
  */
 
-#include "cppmain.h"
-#include "i2c_protocol.hpp"
+#include <cppmain.h>
+#include <i2c_protocol.h>
 
 /***************************************************************************************************/
 static uint8_t i2c_rx_byte_single(uint8_t* pData)

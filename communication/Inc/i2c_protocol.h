@@ -1,11 +1,11 @@
-/** @file i2c_protocol.hpp
+/** @file i2c_protocol.h
  *
  * @author	sean-tedesco
  * @date	2022-11-29
  */
 
-#ifndef COMMUNICATION_INC_I2C_PROTOCOL_HPP_
-#define COMMUNICATION_INC_I2C_PROTOCOL_HPP_
+#ifndef COMMUNICATION_INC_I2C_PROTOCOL_H_
+#define COMMUNICATION_INC_I2C_PROTOCOL_H_
 
 /*
  * @brief: receive one byte from the I2C bus acting as a slave
@@ -51,4 +51,4 @@ static uint8_t i2c_rx_with_stop(uint8_t* pData, char stop);
  */
 static uint8_t i2c_receive(uint8_t *pData);
 
-#endif /* COMMUNICATION_INC_I2C_PROTOCOL_HPP_ */
+#endif /* COMMUNICATION_INC_I2C_PROTOCOL_H_ */
