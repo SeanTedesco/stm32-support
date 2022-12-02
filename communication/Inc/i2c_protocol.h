@@ -8,6 +8,13 @@
 #define COMMUNICATION_INC_I2C_PROTOCOL_H_
 
 /*
+ * @brief:
+ * @param:
+ * @return:
+ */
+uint8_t i2c_tx_byte_single(I2C_HandleTypeDef hi2c, char* string);
+
+/*
  * @brief: receive one byte from the I2C bus acting as a slave
  * 			will try again if the new-line character is received.
  * 			This makes what is being received more intuitive and
@@ -17,7 +24,7 @@
  * @return: rx_bytes - returns 1 if successfully received a byte,
  * 			otherwise will return 0.
  */
-static uint8_t i2c_rx_byte_single(uint8_t* pData);
+uint8_t i2c_rx_byte_single(I2C_HandleTypeDef hi2c, uint8_t* pData);
 
 /***************************************************************************************************/
 /*
@@ -28,7 +35,7 @@ static uint8_t i2c_rx_byte_single(uint8_t* pData);
  * @param: length - the number of bytes to be received.
  * @return: rx_bytes - the total number of bytes successfully received.
  */
-static uint8_t i2c_rx_byte_multi(uint8_t* pData, uint8_t length);
+uint8_t i2c_rx_byte_multi(I2C_HandleTypeDef hi2c, uint8_t* pData, uint8_t length);
 
 /***************************************************************************************************/
 /*
@@ -39,7 +46,7 @@ static uint8_t i2c_rx_byte_multi(uint8_t* pData, uint8_t length);
  * @param: stop - the character that will arrest the reception of data.
  * @return: rx_bytes - the total number of bytes successfully received.
  */
-static uint8_t i2c_rx_with_stop(uint8_t* pData, char stop);
+uint8_t i2c_rx_with_stop(I2C_HandleTypeDef hi2c, uint8_t* pData, char stop);
 
 /***************************************************************************************************/
 /*
@@ -49,6 +56,6 @@ static uint8_t i2c_rx_with_stop(uint8_t* pData, char stop);
  * 			the I2C bus.
  * @return: rx_bytes - the total number of bytes successfully received.
  */
-static uint8_t i2c_receive(uint8_t *pData);
+uint8_t i2c_receive(I2C_HandleTypeDef hi2c, uint8_t *pData);
 
 #endif /* COMMUNICATION_INC_I2C_PROTOCOL_H_ */
