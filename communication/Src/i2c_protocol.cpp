@@ -8,14 +8,23 @@
 #include <i2c_protocol.h>
 
 /***************************************************************************************************/
-static uint8_t i2c_rx_byte_single(uint8_t* pData)
+uint8_t i2c_tx_byte_single(I2C_HandleTypeDef hi2c, char* string)
+{
+	uint8_t buf[strlen(string)];
+	strcpy((char*)buf, string);
+	HAL_I2C_Slave_Transmit(&hi2c, buf, strlen((char*)buf), HAL_MAX_DELAY);
+	return 1;
+}
+
+/***************************************************************************************************/
+uint8_t i2c_rx_byte_single(I2C_HandleTypeDef hi2c, uint8_t* pData)
 {
 	uint8_t rx_bytes = 0;
 
-	HAL_I2C_Slave_Receive(&hi2c1, pData, 1, HAL_MAX_DELAY);
+	HAL_I2C_Slave_Receive(&hi2c, pData, 1, 1);
 	if( *pData == '\n')
 	{
-		i2c_rx_byte_single(pData);
+		i2c_rx_byte_single(hi2c, pData);
 	}
 	if ( *pData != NULL )
 	{
@@ -24,26 +33,26 @@ static uint8_t i2c_rx_byte_single(uint8_t* pData)
 	return rx_bytes;
 }
 /***************************************************************************************************/
-static uint8_t i2c_rx_byte_multi(uint8_t* pData, uint8_t length)
+uint8_t i2c_rx_byte_multi(I2C_HandleTypeDef hi2c, uint8_t* pData, uint8_t length)
 {
 	uint8_t i;
 	uint8_t rx_bytes = 0;
 
 	for( i=0; i<length; i++)
 	{
-		rx_bytes += i2c_rx_byte_single(pData);
+		rx_bytes += i2c_rx_byte_single(hi2c, pData);
 		pData++;
 	}
 	return rx_bytes;
 }
 /***************************************************************************************************/
-static uint8_t i2c_rx_with_stop(uint8_t* pData, char stop)
+uint8_t i2c_rx_with_stop(I2C_HandleTypeDef hi2c, uint8_t* pData, char stop)
 {
 	uint8_t rx_bytes = 0;
 
 	while(1)
 	{
-		rx_bytes += i2c_rx_byte_single(pData);
+		rx_bytes += i2c_rx_byte_single(hi2c, pData);
 		if( *pData == stop)
 		{
 			break;
@@ -55,7 +64,7 @@ static uint8_t i2c_rx_with_stop(uint8_t* pData, char stop)
 	return rx_bytes;
 }
 /***************************************************************************************************/
-static uint8_t i2c_receive(uint8_t *pData)
+uint8_t i2c_receive(I2C_HandleTypeDef hi2c, uint8_t *pData)
 {
 	uint8_t rx_bytes = 0;
 	uint8_t dataStarted = 0; //false
@@ -65,7 +74,7 @@ static uint8_t i2c_receive(uint8_t *pData)
 
 	while( !messageComplete )
 	{
-		rx_bytes += i2c_rx_byte_single(pData);
+		rx_bytes += i2c_rx_byte_single(hi2c, pData);
 
 		if( dataStarted == 1 ) //true
 		{

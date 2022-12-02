@@ -17,14 +17,14 @@ uint8_t print_string(UART_HandleTypeDef huart, char* string)
 }
 
 /****************************************************************************************************/
-uint8_t uart_rx_byte_singlestring(UART_HandleTypeDef huart, uint8_t* buffer)
+uint8_t uart_rx_byte_single(UART_HandleTypeDef huart, uint8_t* buffer)
 {
 	uint8_t rx_bytes = 0;
 
 	HAL_UART_Receive(&huart, buffer, 1, 0.5);
 	if( *buffer == '\n')
 	{
-		uart_rx_byte_singlestring(huart, buffer);
+		uart_rx_byte_single(huart, buffer);
 	}
 	if ( *buffer != NULL )
 	{
