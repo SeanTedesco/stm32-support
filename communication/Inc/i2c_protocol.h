@@ -4,8 +4,8 @@
  * @date	2022-11-29
  */
 
-#ifndef COMMUNICATION_INC_I2C_PROTOCOL_H_
-#define COMMUNICATION_INC_I2C_PROTOCOL_H_
+#ifndef I2C_PROTOCOL_H_
+#define I2C_PROTOCOL_H_
 
 /*
  * @brief:
@@ -58,4 +58,4 @@ uint8_t i2c_rx_with_stop(I2C_HandleTypeDef hi2c, uint8_t* pData, char stop);
  */
 uint8_t i2c_receive(I2C_HandleTypeDef hi2c, uint8_t *pData);
 
-#endif /* COMMUNICATION_INC_I2C_PROTOCOL_H_ */
+#endif /* I2C_PROTOCOL_H_ */
