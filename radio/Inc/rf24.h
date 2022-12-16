@@ -7,6 +7,7 @@
 #ifndef RF24_H_
 #define RF24_H_
 
+#include "cppmain.h"
 #include "rf24_registers.h"
 
 #define rf24_max(a, b) (a > b ? a : b)
@@ -25,7 +26,7 @@ class RF24
         bool _is_p_variant;                 /* for storing the result of testing the toggleFeatures() affect */
         bool _is_p0_rx;                     /* for keeping track of pipe 0's usage in user-triggered RX mode. */
 
-    protected:    
+    protected:
         bool ack_payloads_enabled;          /* whether ack payloads are enabled. */
         uint8_t addr_width;                 /* the address width to use (3, 4 or 5 bytes). */
         bool dynamic_payloads_enabled;      /* whether dynamic payloads are enabled. */
