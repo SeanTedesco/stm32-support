@@ -59,8 +59,16 @@ class RF24
         bool write(const void* buf, uint8_t len, const bool multicast);
         bool writeFast(const void* buf, uint8_t len);
         bool writeFast(const void* buf, uint8_t len, const bool multicast);
-        
+
 };
+
+void nRF24_init(void);
+void nRF24_tx_mode(uint8_t *address, uint8_t channel);
+void nRF24_rx_mode(uint8_t *address, uint8_t channel);
+uint8_t nRF24_transmit (uint8_t *data);
+void nRF24_receive (uint8_t *data);
+uint8_t nRF24_is_data_available(int pipenum);
+void nRF24_read_all (uint8_t *data);
 
 
 #endif /* RF24_H_ */
