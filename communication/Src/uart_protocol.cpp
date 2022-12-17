@@ -6,6 +6,8 @@
 
 #include <cppmain.h>
 #include <uart_protocol.h>
+#include "string.h"
+#include <stdio.h>
 
 /****************************************************************************************************/
 uint8_t print_string(UART_HandleTypeDef huart, char* string)
@@ -15,6 +17,16 @@ uint8_t print_string(UART_HandleTypeDef huart, char* string)
 	HAL_UART_Transmit(&huart, buf, strlen((char*)buf), HAL_MAX_DELAY);
 	return 1;
 }
+
+uint8_t print_uint8(UART_HandleTypeDef huart, uint8_t number)
+{
+	uint8_t buf[4];
+	sprintf((char*)buf, "%d", number);
+	HAL_UART_Transmit(&huart, buf, strlen((char*)buf), HAL_MAX_DELAY);
+	return 1;
+}
+
+
 
 /****************************************************************************************************/
 uint8_t uart_rx_byte_single(UART_HandleTypeDef huart, uint8_t* buffer)

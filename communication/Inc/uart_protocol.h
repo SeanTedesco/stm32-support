@@ -14,6 +14,12 @@
  */
 uint8_t print_string(UART_HandleTypeDef huart, char* string);
 
+/***************************************************************************************************
+ * @brief:
+ * @param:
+ * @return:
+ */
+uint8_t print_uint8(UART_HandleTypeDef huart, uint8_t number);
 
 /***************************************************************************************************/
 /*
