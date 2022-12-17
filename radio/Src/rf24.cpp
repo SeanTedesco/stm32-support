@@ -16,7 +16,7 @@
  * DEFINES
  *
  */
-#define nRF24_SPI &hspi3
+#define nRF24_SPI &hspi2
 // Define the Chip-Enable GPIO address
 #define nRF24_CE_PORT   GPIOC
 #define nRF24_CE_PIN    GPIO_PIN_6
@@ -71,7 +71,7 @@ void CE_Disable(void)
  * @param: data:	the data to be written
  * @return: void
  */
-void nRF24_write_reg (uint8_t address, uint8_t data)
+void nRF24_write_reg(uint8_t address, uint8_t data)
 {
 	uint8_t buf[2];
 	buf[0] = address|1<<5;
@@ -90,7 +90,6 @@ void nRF24_write_reg_multi(uint8_t Reg, uint8_t *data, int size)
 {
 	uint8_t buf[2];
 	buf[0] = Reg|1<<5;
-	//buf[1] = Data;
 
 	CS_Select();
 	HAL_SPI_Transmit(nRF24_SPI, buf, 1, 100);
@@ -102,7 +101,7 @@ void nRF24_write_reg_multi(uint8_t Reg, uint8_t *data, int size)
  * @param:
  * @return:
  */
-uint8_t nRF24_read_reg (uint8_t Reg)
+uint8_t nRF24_read_reg(uint8_t Reg)
 {
 	uint8_t data=0;
 
@@ -142,7 +141,6 @@ void nRF24_send_cmd(uint8_t cmd)
  */
 void nRF24_reset(uint8_t REG)
 {
-	print_string(huart2, "begin reset...\r\n");
 	if (REG == NRF_STATUS){
 		nRF24_write_reg(NRF_STATUS, 0x00);
 
@@ -181,7 +179,6 @@ void nRF24_reset(uint8_t REG)
 		nRF24_write_reg(DYNPD, 0);
 		nRF24_write_reg(FEATURE, 0);
 	}
-	print_string(huart2, "end reset...\r\n");
 }
 
 /* @brief:
@@ -190,7 +187,7 @@ void nRF24_reset(uint8_t REG)
  */
 void nRF24_init(void)
 {
-	print_string(huart2, "begin init...\r\n");
+	print_string(huart2, "\t begin init...\r\n");
 	CE_Disable();
 	nRF24_reset(0);
 	nRF24_write_reg(NRF_CONFIG, 0);
@@ -201,7 +198,7 @@ void nRF24_init(void)
 	nRF24_write_reg(RF_CH, 0);
 	nRF24_write_reg(RF_SETUP, 0x0E);
 	CE_Enable();
-	print_string(huart2, "end init...\r\n");
+	print_string(huart2, "\t end init...\r\n");
 }
 
 /* @brief:
@@ -245,7 +242,7 @@ void nRF24_rx_mode(uint8_t *address, uint8_t channel)
  * @param:
  * @return:
  */
-uint8_t nRF24_transmit (uint8_t *data)
+uint8_t nRF24_transmit(uint8_t *data)
 {
 	uint8_t cmdtosend = 0;
 	CS_Select();
@@ -269,7 +266,7 @@ uint8_t nRF24_transmit (uint8_t *data)
  * @param:
  * @return:
  */
-void nRF24_receive (uint8_t *data)
+void nRF24_receive(uint8_t *data)
 {
 	uint8_t cmdtosend = 0;
 	CS_Select();
@@ -301,7 +298,7 @@ uint8_t nRF24_is_data_available(int pipenum)
  * @param:
  * @return:
  */
-void nRF24_read_all (uint8_t *data)
+void nRF24_read_all(uint8_t *data)
 {
 	for (int i=0; i<10; i++)
 	{
@@ -323,6 +320,5 @@ void nRF24_read_all (uint8_t *data)
 	{
 		*(data+i) = nRF24_read_reg(i-12);
 	}
-
 }
 
