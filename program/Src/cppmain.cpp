@@ -16,10 +16,10 @@
  * LOCAL VARIABLES
  */
 uint8_t tx_buffer[] = "test, test, test!";
+uint16_t rxidx = 0;
+uint8_t rx_flag = 0;
 uint8_t rx_buffer[32];
 uint8_t rx_byte;
-uint8_t rx_flag;
-uint16_t rxidx;
 
 uint8_t RxAddress[] = {0xEE,0xDD,0xCC,0xBB,0xAA}; // list of data pipes available
 uint8_t RxData[32];
@@ -59,6 +59,8 @@ uint8_t nRF24_read_regg(uint8_t Reg)
 // do stuff once
 void cpp_main(){
 
+	Serial myserial;
+
 	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 
 /*
@@ -82,9 +84,9 @@ void cpp_main(){
 	while(1){
 
 
-		print_string(huart2, "received from obc: ");
-		print_string(huart2, (char*)rx_buffer);
-		print_string(huart2, "\r\n");
+		myserial.print_this(huart2, "received from obc: ");
+		myserial.print_this(huart2, (char*)rx_buffer);
+		myserial.print_this(huart2, "\r\n");
 
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		HAL_Delay(250);
