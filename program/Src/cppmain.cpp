@@ -19,7 +19,7 @@ uint8_t tx_buffer[] = "test, test, test!";
 uint8_t rx_buffer[32];
 uint8_t rx_byte;
 uint8_t rx_flag;
-uint16_t rxldx;
+uint16_t rxidx;
 
 uint8_t RxAddress[] = {0xEE,0xDD,0xCC,0xBB,0xAA}; // list of data pipes available
 uint8_t RxData[32];
@@ -33,7 +33,17 @@ uint8_t uButtonFlag = 0;
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	HAL_UART_Receive_IT(&huart1, rx_buffer, 12);
+	if(huart->Instance == USART1){
+		if (rx_byte == '>' || rxidx >= (32-1)) {
+			rx_buffer[rxidx] = rx_byte;
+			rx_flag = 1;
+			rxidx = 0;
+		} else {
+			rx_buffer[rxidx] = rx_byte;
+			rxidx++;
+		}
+	}
+	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 }
 
 uint8_t nRF24_read_regg(uint8_t Reg)
@@ -49,8 +59,9 @@ uint8_t nRF24_read_regg(uint8_t Reg)
 // do stuff once
 void cpp_main(){
 
-	HAL_UART_Receive_IT(&huart1, rx_buffer, 12);
+	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 
+/*
 	nRF24_init();
 	nRF24_rx_mode(RxAddress, 6);
 
@@ -65,15 +76,16 @@ void cpp_main(){
 	HAL_Delay(100);
 	print_string(huart2, "\r\n");
 	HAL_Delay(100);
-
+*/
 
 	// main loop, do stuff repeatedly
 	while(1){
-/*
+
+
 		print_string(huart2, "received from obc: ");
 		print_string(huart2, (char*)rx_buffer);
 		print_string(huart2, "\r\n");
-*/
+
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		HAL_Delay(250);
 
