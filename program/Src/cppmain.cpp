@@ -49,16 +49,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 // do stuff once
 void cpp_main(){
 
-	Serial myserial;
+	Serial myserial(huart2);
 
 	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 
 	// main loop, do stuff repeatedly
 	while(1){
 
-		myserial.print_string(huart2, "received from obc: ");
-		myserial.print_string(huart2, (char*)rx_buffer);
-		myserial.print_string(huart2, "\r\n");
+		myserial.print_string("received from obc: ");
+		myserial.print_string((char*)rx_buffer);
+		myserial.print_string("\r\n");
 
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		HAL_Delay(250);

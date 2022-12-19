@@ -9,14 +9,16 @@
 
 class Serial {
 	public: // attributes
+		UART_HandleTypeDef internal_huart;
 		uint16_t rxidx = 0;
 		uint8_t rx_flag = 0;
 		uint8_t rx_buffer[32];
 		uint8_t rx_byte;
 
 	public: // methods
-		void print_string(UART_HandleTypeDef huart, char* string);
-		void print_uint8(UART_HandleTypeDef huart, uint8_t number);
+		Serial(UART_HandleTypeDef huart);
+		void print_string(char* string);
+		void print_uint8(uint8_t number);
 };
 
 #endif /* UART_PROTOCOL_H_ */

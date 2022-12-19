@@ -10,19 +10,25 @@
 #include <stdio.h>
 
 /****************************************************************************************************/
-void Serial::print_string(UART_HandleTypeDef huart, char* string)
+Serial::Serial(UART_HandleTypeDef huart)
 {
-	uint8_t buf[strlen(string)];
-	strcpy((char*)buf, string);
-	HAL_UART_Transmit(&huart, buf, strlen((char*)buf), HAL_MAX_DELAY);
+	internal_huart = huart;
 }
 
 /****************************************************************************************************/
-void Serial::print_uint8(UART_HandleTypeDef huart, uint8_t number)
+void Serial::print_string( char* string)
+{
+	uint8_t buf[strlen(string)];
+	strcpy((char*)buf, string);
+	HAL_UART_Transmit(&internal_huart, buf, strlen((char*)buf), HAL_MAX_DELAY);
+}
+
+/****************************************************************************************************/
+void Serial::print_uint8(uint8_t number)
 {
 	uint8_t buf[4];
 	sprintf((char*)buf, "%d", number);
-	HAL_UART_Transmit(&huart, buf, strlen((char*)buf), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&internal_huart, buf, strlen((char*)buf), HAL_MAX_DELAY);
 }
 
 /****************************************************************************************************/
