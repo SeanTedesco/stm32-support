@@ -8,37 +8,15 @@
 #define UART_PROTOCOL_H_
 
 class Serial {
+	public: // attributes
+		uint16_t rxidx = 0;
+		uint8_t rx_flag = 0;
+		uint8_t rx_buffer[32];
+		uint8_t rx_byte;
 
-public: // attributes
-	uint16_t rxidx = 0;
-	uint8_t rx_flag = 0;
-	uint8_t rx_buffer[32];
-	uint8_t rx_byte;
-
-public: // methods
-	void print_this(UART_HandleTypeDef huart, char* string);
+	public: // methods
+		void print_string(UART_HandleTypeDef huart, char* string);
+		void print_uint8(UART_HandleTypeDef huart, uint8_t number);
 };
-
-/***************************************************************************************************
- * @brief:
- * @param:
- * @return:
- */
-uint8_t print_string(UART_HandleTypeDef huart, char* string);
-
-/***************************************************************************************************
- * @brief:
- * @param:
- * @return:
- */
-uint8_t print_uint8(UART_HandleTypeDef huart, uint8_t number);
-
-/***************************************************************************************************/
-/*
- * @brief:
- * @param:
- * @return:
- */
-uint8_t uart_rx_byte_single(UART_HandleTypeDef huart, uint8_t* buffer);
 
 #endif /* UART_PROTOCOL_H_ */
