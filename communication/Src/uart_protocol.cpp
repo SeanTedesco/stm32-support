@@ -7,7 +7,47 @@
 #include <cppmain.h>
 #include <uart_protocol.h>
 #include "string.h"
-#include <stdio.h>
+
+/****************************************************************************************************/
+uint16_t uart1_rxidx = 0;
+uint8_t uart1_rx_flag = 0;
+uint8_t uart1_rx_buffer[max_rx_buffer_size] = {0};
+uint8_t uart1_rx_byte = 0;
+
+uint16_t uart2_rxidx = 0;
+uint8_t uart2_rx_flag = 0;
+uint8_t uart2_rx_buffer[max_rx_buffer_size] = {0};
+uint8_t uart2_rx_byte = 0;
+
+/****************************************************************************************************/
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart->Instance == USART1){
+		if (uart1_rx_byte == '>' || uart1_rxidx >= max_rx_buffer_size) {
+			uart1_rx_buffer[uart1_rxidx] = uart1_rx_byte;
+			uart1_rx_flag = 1;
+			uart1_rxidx = 0;
+		} else {
+			uart1_rx_buffer[uart1_rxidx] = uart1_rx_byte;
+			uart1_rxidx++;
+
+		}
+	HAL_UART_Receive_IT(&huart1, &uart1_rx_byte, 1);
+	}
+	if(huart->Instance == USART2){
+		if (uart2_rx_byte == '>' || uart2_rxidx >= max_rx_buffer_size) {
+			uart2_rx_buffer[uart2_rxidx] = uart2_rx_byte;
+			uart2_rx_flag = 1;
+			uart2_rxidx = 0;
+		} else {
+			uart2_rx_buffer[uart2_rxidx] = uart2_rx_byte;
+			uart2_rxidx++;
+
+		}
+	HAL_UART_Receive_IT(&huart2, &uart2_rx_byte, 1);
+	}
+
+}
 
 /****************************************************************************************************/
 Serial::Serial(UART_HandleTypeDef huart)
