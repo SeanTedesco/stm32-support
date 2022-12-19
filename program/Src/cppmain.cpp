@@ -28,7 +28,7 @@ uint8_t TxAddress[] = {0xEE,0xDD,0xCC,0xBB,0xAA};
 // do stuff once
 void cpp_main(){
 
-	Serial transmitter(huart2);
+	Serial transmitter(huart2);							// transmit on huart2
 	HAL_UART_Receive_IT(&huart1, &uart1_rx_byte, 1);	// receive on huart1
 
 	// main loop, do stuff repeatedly
