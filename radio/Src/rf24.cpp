@@ -187,7 +187,6 @@ void nRF24_reset(uint8_t REG)
  */
 void nRF24_init(void)
 {
-	print_string(huart2, "\t begin init...\r\n");
 	CE_Disable();
 	nRF24_reset(0);
 	nRF24_write_reg(NRF_CONFIG, 0);
@@ -198,7 +197,6 @@ void nRF24_init(void)
 	nRF24_write_reg(RF_CH, 0);
 	nRF24_write_reg(RF_SETUP, 0x0E);
 	CE_Enable();
-	print_string(huart2, "\t end init...\r\n");
 }
 
 /* @brief:

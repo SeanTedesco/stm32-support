@@ -56,9 +56,9 @@ void cpp_main(){
 	// main loop, do stuff repeatedly
 	while(1){
 
-		myserial.print_this(huart2, "received from obc: ");
-		myserial.print_this(huart2, (char*)rx_buffer);
-		myserial.print_this(huart2, "\r\n");
+		myserial.print_string(huart2, "received from obc: ");
+		myserial.print_string(huart2, (char*)rx_buffer);
+		myserial.print_string(huart2, "\r\n");
 
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		HAL_Delay(250);
