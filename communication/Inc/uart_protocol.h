@@ -7,6 +7,18 @@
 #ifndef UART_PROTOCOL_H_
 #define UART_PROTOCOL_H_
 
+class Serial {
+
+public: // attributes
+	uint16_t rxidx = 0;
+	uint8_t rx_flag = 0;
+	uint8_t rx_buffer[32];
+	uint8_t rx_byte;
+
+public: // methods
+	void print_this(UART_HandleTypeDef huart, char* string);
+};
+
 /***************************************************************************************************
  * @brief:
  * @param:
